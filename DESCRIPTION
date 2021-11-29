@@ -2,7 +2,10 @@ Package: RPackVGL
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Gaëtan", "Louarn", "gaetan.louarn@inrae.fr", role = c("aut", "cre"))
+    person(given = "Gaëtan",
+           family = "Louarn",
+           role = c("aut", "cre"),
+           email = "gaetan.louarn@inrae.fr")
 Description: What the package does (one paragraph).
 License: file LICENSE
 Encoding: UTF-8
