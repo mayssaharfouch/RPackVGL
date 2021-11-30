@@ -1,12 +1,7 @@
 =========================
-README for RPackVGL
+RPackVGL: The R package for the VGL FSPM
 =========================
 
-
-
-
-
-## 1. To do...
 
 
 ## License
