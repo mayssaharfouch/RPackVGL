@@ -1,6 +1,5 @@
-=========================
 RPackVGL: The R package for the VGL FSPM
-=========================
+
 
 
 
