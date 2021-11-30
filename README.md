@@ -1,4 +1,4 @@
-RPackVGL: The R package for the VGL FSPM
+#RPackVGL: The R package for the VGL FSPM
 
 
 
