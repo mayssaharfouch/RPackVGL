@@ -2,6 +2,7 @@
 
 export("%>%")
 export()
+export(read_ltoto)
 importFrom(data.table,last)
 importFrom(ggplot2,aes)
 importFrom(ggplot2,element_blank)
@@ -20,3 +21,4 @@ importFrom(ggplot2,theme)
 importFrom(ggplot2,theme_bw)
 importFrom(hrbrthemes,theme_ipsum)
 importFrom(magrittr,"%>%")
+importFrom(utils,read.table)
