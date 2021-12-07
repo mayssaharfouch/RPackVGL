@@ -18,4 +18,5 @@ Imports:
     hrbrthemes,
     magrittr,
     patchwork,
+    rlang,
     usethis
