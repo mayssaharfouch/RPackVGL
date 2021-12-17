@@ -1,18 +1,7 @@
-=========================
-README for RPackVGL
-=========================
+
+# RPackVGL: The R package for the VGL FSPM
 
 
-
-
-
-## 1. To do...
-
-
-
-## Authors
-
-**Gaetan LOUARN**,  - see file [AUTHORS](AUTHORS) for details
 
 
 ## License

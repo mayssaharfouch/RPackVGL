@@ -1,0 +1,22 @@
+Package: RPackVGL
+Title: A Package to analyze VGL simulations
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Gaëtan",
+           family = "Louarn",
+           role = c("aut", "cre"),
+           email = "gaetan.louarn@inrae.fr")
+Description: What the package does (one paragraph).
+License: file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    data.table,
+    ggplot2,
+    ggpubr,
+    hrbrthemes,
+    magrittr,
+    patchwork,
+    rlang,
+    usethis
