@@ -2,6 +2,8 @@
 ## fonctions de lecture et de mise en forme R pour analyse des sorties de simul l-egume
 #########
 library(ggplot2)
+library("gginnards")
+library(ineq)
 
 
 read_ltoto <- function(ls_toto)
@@ -155,6 +157,8 @@ build_simmoy <- function(ltoto, lsusm, esp=NA, optSD=F)
 
   LAI <- moysimval(ltoto, lsusm, var='SurfPlante', esp, optSD)/ surfsolref
   MSA <- moysimval(ltoto,lsusm, var='MSaerien', esp, optSD)/ surfsolref
+  MSArec <- moysimval(ltoto,lsusm, var='MSaerienRec', esp, optSD)/ surfsolref
+  MSAnonrec <- moysimval(ltoto,lsusm, var='MSaerienNonRec', esp, optSD)/ surfsolref
   MSpiv <- moysimval(ltoto,lsusm, var='MS_pivot', esp, optSD)/ surfsolref
   MSracfine <- moysimval(ltoto,lsusm, var='MS_rac_fine', esp, optSD)/ surfsolref
   MSrac <- MSpiv + MSracfine
@@ -176,7 +180,7 @@ build_simmoy <- function(ltoto, lsusm, esp=NA, optSD=F)
   Ndfa <- moysimval(ltoto,lsusm, var='Ndfa', esp, optSD)/ nbplt
   Epsi <- moysimval(ltoto,lsusm, var='epsi', esp, optSD)
   
-  simmoy <- data.frame(STEPS, TT, NBI, NBphyto, LAI, MSA, MSpiv, MSracfine, MSrac, RDepth, Hmax, FTSW, NNI, R_DemandC_Root, cutNB, Npc_aer,Ndfa,Epsi,NBsh)
+  simmoy <- data.frame(STEPS, TT, NBI, NBphyto, LAI, MSA, MSArec, MSAnonrec, MSpiv, MSracfine, MSrac, RDepth, Hmax, FTSW, NNI, R_DemandC_Root, cutNB, Npc_aer,Ndfa,Epsi,NBsh)
   simmoy
 }#version revue par Lucas tient cmpte du nom de l'espece dans les assos
 
@@ -269,23 +273,25 @@ dynamic_graphs <- function(simmoy, name, obs=NULL, surfsolref=NULL)
 
 
 #fonction graph ggplot2
-gg_plotsim <- function(varsim, simmoy, simsd, name="")
+
+gg_plotsim <- function(varsim, simmoy, simsd, name="", col="blue", colref="red")
 {
   #fait le line plot avec ecart type a partir des tableau moyen simules
+  # for dtoto daily output
   var_ <- varsim #"FTSW"#"NBI"#"MSA"#"NNI"#"LAI"#
   
   min <- 0
   max <- 1.5*max(simmoy[,var_])
   
   plot_var <- ggplot(data = simmoy, aes(x = STEPS)) +
-    geom_line(aes(y = simmoy[,var_]), color="blue")+
-    geom_ribbon(aes(ymin=simmoy[,var_]-simsd[,var_],ymax=simmoy[,var_]+simsd[,var_]),fill="blue",alpha=0.2)+
+    geom_line(aes(y = simmoy[,var_]), color=col)+
+    geom_ribbon(aes(ymin=simmoy[,var_]-simsd[,var_],ymax=simmoy[,var_]+simsd[,var_]),fill=col,alpha=0.2)+
     geom_hline(yintercept=0)+
     ylim(min,max)+
     geom_text(x=1.20*min(simmoy$STEPS), y=0.98*max, size=4, label=name)+
     theme(axis.text.x = element_text(size=6),axis.text.y = element_text(size=6))+
     labs(title = "obs",subtitle = "sim",x = "DOY", y = var_)+
-    theme(plot.title=element_text(size=10,color = "red"),plot.subtitle = element_text(size=10,color = "blue"))
+    theme(plot.title=element_text(size=10,color = colref),plot.subtitle = element_text(size=10,color = col))
   
   plot_var
 }
@@ -294,13 +300,13 @@ gg_plotsim <- function(varsim, simmoy, simsd, name="")
 
 
 
-gg_addplotobs <- function(plot_var, var_, obsOK, corresp)
+gg_addplotobs <- function(plot_var, var_, obsOK, corresp, colobs="red")
 {
   # ajour a un graph simule des points observe pour variable var_
   #obsOK : obs avec tableau meme dimension que les simul (merge)
   #corresp: dataframe de correspondance des nom de variables obs/sim
   nomvarobs <- as.character(corresp[corresp$sim==var_,c("obs")])
-  plot_var2 <- plot_var + {if(var_ %in% corresp$sim) geom_point(aes(obsMerge$DOY, obsMerge[,nomvarobs]), fill="red",color="red" , size=2)}
+  plot_var2 <- plot_var + {if(var_ %in% corresp$sim) geom_point(aes(obsMerge$DOY, obsMerge[,nomvarobs]), fill=colobs,color=colobs , size=2)}
   
   plot_var2
 }
@@ -309,7 +315,7 @@ gg_addplotobs <- function(plot_var, var_, obsOK, corresp)
 
 
 
-gg_plotObsSim <- function(obssim, var_, name="")
+gg_plotObsSim <- function(obssim, var_, name="", colpt="red")
 {
   #plot obs-sim avec ggplot
   
@@ -335,7 +341,7 @@ gg_plotObsSim <- function(obssim, var_, name="")
     ggtitle(name)+
     geom_abline(intercept = 0, slope = 1, color = "black")+
     geom_point(aes(color = "obs"))+
-    geom_smooth(method=lm, se = FALSE, color = "red")+
+    geom_smooth(method=lm, se = FALSE, color = colpt)+
     ylim(min,max)+
     xlim(min,max)+
     geom_text(x=0.2*max, y=0.95*max, size=3, label=eq)+
@@ -349,6 +355,31 @@ gg_plotObsSim <- function(obssim, var_, name="")
   plot_ObsSim 
 }
 #plot_ObsSim <- gg_plotObsSim(obssim, "NBI", name=onglet)
+
+
+
+
+Concat_ggplot_layers <- function(ls_pltsim, layertype = "GeomLine")
+{
+  # function avec une liste de ggplot similaires et ajoute dans le premier 
+  #les layers de type layertype des autres graphs
+  # utilise package gginnards
+  #teste ds eval finales ISOP MF
+  
+  #layertype = "GeomLine"
+  
+  p <- ls_pltsim[[1]] #part du premier plot de la liste
+  for (i in 2:length(ls_pltsim))
+  {
+    nom <- names(ls_pltsim)[i]
+    lay_ <- extract_layers(ls_pltsim[[nom]], layertype)
+    p <- append_layers(p, lay_, position = "bottom")
+    #print(p)
+  }
+  
+  p
+}
+#p <- Concat_ggplot_layers(ls_pltsim_ID, layertype = "GeomLine")
 
 
 
@@ -541,7 +572,7 @@ build_ls_dobssim <-function(esp_, ls_expe, ls_var, ls_varsim)
 
 
 
-library(ineq)
+
 build_dtoto <- function(sp_dtoto, key, DOYdeb, DOYScoupe)
 {
   ls_toto_paquet <- sp_dtoto[[key]]$name
@@ -889,18 +920,3 @@ col100 <- function(valrel100, lscols)
   cols_
 }
 
-
-
-#fonction des exemple de pairs
-panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
-{
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(0, 1, 0, 1))
-  r <- abs(cor(x, y))
-  txt <- format(c(r, 0.123456789), digits = digits)[1]
-  txt <- paste0(prefix, txt)
-  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
-  text(0.5, 0.5, txt, cex = cex.cor * r)
-}
-#df <- data.frame(retard,Val_param,ParaMvois,PARivois,MScumvois, MStot_ini, MStot_fin, MStot_coupe1, MStot_coupe2, MStot_coupe3, MStot_coupe4, MStot_coupe5)
-#pairs(df, lower.panel = panel.smooth, upper.panel = panel.cor,gap=0, row1attop=FALSE, main=key)

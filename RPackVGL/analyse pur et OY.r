@@ -273,3 +273,107 @@ boxplot(Ytot~trait, tabpur,las=3)
 #?? j'ai des simuls avec des N- dasn 1pN
 #dtoto[dtoto$trait == "8 SD1-1",c("Ytot", "Mng")]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### graphcorrelations !!!
+
+
+# reanalyse dtoto pour plot de correlation
+
+dtoto <- read.csv("C://inputs//inputs test variance BLW//dtoto//save_dtoto_allvar_multiN-OY.csv",header=T, sep=",")
+#dtoto <- read.csv("C://inputs//inputs test variance BLW//dtoto//save_dtoto_allvar_multi0N-OY.csv",header=T, sep=",")
+#dtoto <- read.csv("C://inputs//inputs test variance BLW//dtoto//save_dtoto_allvar_1p0N-OY.csv",header=T, sep=",")
+#dtoto <- read.csv("C://inputs//inputs test variance BLW//dtoto//save_dtoto_allvar_1pN-OY.csv",header=T, sep=",")
+
+
+library("corrplot")
+
+
+#pour definir niveaux de facteur et leur ordre!
+lsLum <- c(46,45,44,1,50,51,52)
+lsN <- c(49,48,47,1,53,54,55)
+lsall <- c(40,39,38,1,41,42,43)
+
+Ntrait <-"N+"#"N-"#"N/2"# 
+
+
+sc_ <- "SD24-24"#"SD23-23"#"SD1-1"#
+x <- dtoto[dtoto$sd== sc_ & dtoto$scenario2 %in% lsLum,]
+
+x$scenario2 <- factor(x$scenario2,levels=as.character(lsLum)) #remise en ordre des niveaux de facteur!
+boxplot(Yprop1~scenario2, x, ylim=c(0,1), main=paste(sc_, Ntrait))
+
+boxplot(Yprop1~scenario2, x, ylim=c(0,1), main=paste(sc_, Ntrait))
+boxplot(Cor_PARinonKin~scenario2, x, ylim=c(-1,1), main=paste(sc_, Ntrait))
+
+#Cor_PARinonKin
+#Fix0_Cor_ParamAllNorm
+#Fix1_Cor_ParamAllNorm
+
+
+
+
+lsLum <- c(46,45,44,1,50,51,52)
+lsN <- c(49,48,47,1,53,54,55)
+lsall <- c(40,39,38,1,41,42,43)
+
+
+
+
+
+nomvar <- "Fix0_Cor_ParamAllNorm"#"Cor_PARinonKin"#"Fix1_Cor_ParamAllNorm"#
+#ls_nomSD <- c("SD1-1","SD23-23","SD24-24") #lum
+#ls_nomSD <- c("SD1-1","SD25-25","SD26-26") #N
+ls_nomSD <- c("SD1-1","SD3-3","SD4-4") #all
+series <- lsall#lsN#lsLum#
+missings <- 0.45#0.6#-0.005 #for neutral
+
+#construction matrices de correlation
+sc_ <- ls_nomSD[1]#"SD1-1"#"SD24-24"#"SD23-23"#
+x <- dtoto[dtoto$sd== sc_ & dtoto$scenario2 %in% series,]
+val <- x[,c(nomvar)]
+res <- by(val, x$scenario2, mean)
+df <- data.frame(nom=names(res), vmoy1=as.numeric(res))
+
+
+sc_ <- ls_nomSD[2]#"SD23-23"#"SD1-1"#"SD24-24"#
+x <- dtoto[dtoto$sd== sc_ & dtoto$scenario2 %in% series,]
+val <- x[,c(nomvar)]
+res <- by(val, x$scenario2, mean)
+df <- merge(df, data.frame(nom=names(res), vmoy2=as.numeric(res)), all=T)
+
+
+sc_ <- ls_nomSD[3]#"SD24-24"#"SD23-23"#"SD1-1"#
+x <- dtoto[dtoto$sd== sc_ & dtoto$scenario2 %in% series,]
+val <- x[,c(nomvar)]
+res <- by(val, x$scenario2, mean)
+df <- merge(df, data.frame(nom=names(res), vmoy3=as.numeric(res)), all=T)
+
+#remetre dans l'ordre de serie
+df$nom <- as.character(df$nom)
+df <- df[order(as.character(series), df$nom),] #ordre serie
+df <- df[7:1,]#remet serie a l'endroit -1.5->1.5
+
+
+mat <- t(as.matrix(df[,c("vmoy1", "vmoy2", "vmoy3")]))
+colnames(mat) <- c(-1.5,-1,-0.5,0,0.5,1,1.5)
+rownames(mat) <- c("CV=0.00001", "CV=0.1", "CV=0.3")
+mat[is.na(mat)] <- missings
+
+
+corrplot(mat)
+
+
