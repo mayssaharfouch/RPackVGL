@@ -5,7 +5,7 @@
 \alias{toto}
 \title{Model Simulations}
 \format{
-A data frame with 53940 rows and 10 variables
+A data frame with 16776 rows and 66 variables
 }
 \usage{
 data(toto)
@@ -15,66 +15,66 @@ An output example
 }
 \details{
 \itemize{
-\item{TT} {Thermal time, in degree.days}
-\item{time} {no unit}
-\item{cutNB} {no unit}
-\item{SurfPlante} {Total plant leaf area, in \ifelse{html}{\out{m<sup>2</sup>}}{\eqn{m^2}}}
-\item{PARiPlante} {Plant intercepted PAR, in J.PAR}
-\item{epsi} {no unit}
-\item{dMSaer} {no unit}
-\item{Hplante} {Canopy height, in cm}
-\item{Dplante} {no unit}
-\item{RLTot} {no unit}
-\item{RDepth} {Root depth, in m}
-\item{MSaerien} {Total plant shoot dry biomass, in g}
-\item{MSfeuil} {no unit}
-\item{MStot} {no unit}
-\item{countSh} {no unit}
-\item{countShExp} {no unit}
-\item{demandC} {no unit}
-\item{Leaf_Stem} {no unit}
-\item{NBsh} {Number of primary shoots per plant}
-\item{NBI} {Number of phytomers per primary axes of plant}
-\item{NBD1} {no unit}
-\item{NBB} {no unit}
-\item{FTSW} {Fraction of transpirable soil water}
-\item{Etransp} {no unit}
-\item{DemandC_Feuil} {The demand of leaves for carbon}
-\item{DemandN_Pet} {The demand of petioles for nitrogen}
-\item{DemandN_Stem} {The demand of stems for nitrogen}
-\item{DemandN_Tot} {The demand of individual plants for nitrogen}
-\item{DemandN_Tot_Aer} {The demand of aerial parts of individual plants for nitrogen}
-\item{Npc_aer} {no unit}
-\item{NNI} {Plant nitrogen nutrition index}
-\item{Ndfa} {Proportion of N derived from fixation}
-\item{Qfix} {no unit}
-\item{Naerien} {no unit}
-\item{Nuptake_sol} {no unit}
-\item{R_DemandC_Root} {no unit}
-\item{SRL} {no unit}
-\item{dMSenFeuil} {no unit}
-\item{dMSenTige} {no unit}
-\item{MS_pivot} {no unit}
-\item{MS_rac_fine} {no unit}
-\item{R_DemandC_Shoot} {no unit}
-\item{RUEpot} {no unit}
-\item{RUE} {Radiation use efficiency, in \ifelse{html}{\out{g.J.PAR<sup>-1</sup>}}{\eqn{g.J.PAR^-1}}}
-\item{Npc_piv} {no unit}
-\item{Npc_rac_fine} {no unit}
-\item{dRLenSentot} {no unit}
-\item{dMSenRoot} {no unit}
-\item{RLTotNet} {no unit}
-\item{MS_rac_fineNet} {no unit}
-\item{perteN_rac_fine} {no unit}
-\item{NBphyto} {no unit}
-\item{NBapexAct} {no unit}
-\item{transpi} {no unit}
-\item{cumtranspi} {no unit}
-\item{aliveB} {no unit}
-\item{TTphyllo} {no unit}
-\item{dTT} {no unit}
-\item{Udev} {no unit}
-\item{Udevstress} {no unit}
+\item{TT:} {Thermal Time, in degree.days}
+\item{time} {Time since the Start of the Simulation, in seconds}
+\item{cutNB:} {Number of Cuts}
+\item{SurfPlante:} {Total Plant Leaf Area, in \ifelse{html}{\out{m<sup>2</sup>}}{\eqn{m^2}}}
+\item{PARiPlante:} {Plant Intercepted PAR, in J.PAR}
+\item{epsi:} {Light Use Efficiency, in \ifelse{html}{\out{g dry matter MJ<sup>-1</sup>}}{\eqn{g dry matter MJ^-1}}}
+\item{dMSaer:} {Dry Matter Production, in \ifelse{html}{\out{g.t<sup>-1</sup>}}{\eqn{g.t^-1}}}
+\item{Hplante:} {Canopy Height, in m}
+\item{Dplante:} {Plant Diameter, in m}
+\item{RDepth:} {Root Depth, in m}
+\item{MSaerien:} {Total Plant Shoot Dry Biomass, in g}
+\item{MSfeuil:} {Leaves Dry Biomass, in g}
+\item{RLTot:} {Root Length, in m}
+\item{MStot:} {Total Plant Dry Biomass, in g}
+\item{countSh} {}
+\item{countShExp} {}
+\item{demandC:} {Demand for Carbon, in g}
+\item{Leaf_Stem:} {Ratio between Leaves Biomass and Stem Biomass}
+\item{NBsh:} {Number of Primary Shoots per Plant}
+\item{NBI:} {Number of Phytomers per Primary Axes of Plant}
+\item{NBD1:} {Number of Dormant Buds (type I)}
+\item{NBB:} {Number of Buds (Type B)}
+\item{FTSW:} {Fraction of Transpirable Soil Water}
+\item{Etransp:} {Daily Plant Transpiration, in \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^3}}}
+\item{DemandC_Feuil:} {Leaves Demand for Carbon}
+\item{DemandN_Pet:} {Petioles Demand for Nitrogen}
+\item{DemandN_Stem:} {Stems Demand for Nitrogen}
+\item{DemandN_Tot:} {Plant Demand for Nitrogen}
+\item{DemandN_Tot_Aer:} {Shoots Demands for Nitrogen}
+\item{Npc_aer:} {Actual Nitrogen Concentration of the Canopy, in \%}
+\item{NNI:} {Plant Nitrogen Nutrition Index}
+\item{Ndfa:} {Proportion of N derived from Fixation}
+\item{Qfix:} {Plant Atmospheric N Fixation, in g}
+\item{Naerien:} {Total Plant Shoot N content, in g}
+\item{Nuptake_sol:} {Plant Mineral N Uptake, in g}
+\item{R_DemandC_Root:} {Carbon Offer to Demand Ratio for Roots}
+\item{SRL:} {Specific Root Length, in m}
+\item{dMSenFeuil} {}
+\item{dMSenTige} {}
+\item{MS_pivot} {Taproots Dry Biomass, in g}
+\item{MS_rac_fine} {Fine Roots Dry Biomass, in g}
+\item{R_DemandC_Shoot} {}
+\item{RUEpot} {Potential Radiation Use Efficiency, in \ifelse{html}{\out{g.J.PAR<sup>-1</sup>}}{\eqn{g.J.PAR^-1}} }
+\item{RUE} {Radiation Use Efficiency, in \ifelse{html}{\out{g.J.PAR<sup>-1</sup>}}{\eqn{g.J.PAR^-1}}}
+\item{Npc_piv:} {Actual Nitrogen Concentration of Taproots , in \%}
+\item{Npc_rac_fine:} {Actual Nitrogen Concentration of Fine Roots, in \%}
+\item{dRLenSentot} {Variation of Root Length, in m}
+\item{dMSenRoot} {}
+\item{RLTotNet} {Length of roots actively growing, in m}
+\item{MS_rac_fineNet} {Biomass of Fine Roots, in g}
+\item{perteN_rac_fine} {N losses due to the senescence of fine roots, in g}
+\item{NBphyto:} {Total Number of Phytomers}
+\item{NBapexAct:} {Number of Active Apex}
+\item{transpi:} {Daily Plant Transpiration, in \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^3}}}
+\item{cumtranspi:} {Cumulative Transpiration from the start of Plant Emergence, in \ifelse{html}{\out{m<sup>3</sup>}}{\eqn{m^3}}}
+\item{aliveB} {}
+\item{TTphyllo:} {Phyllocronic Time, in phyllochron}
+\item{dTT:} {Daily Variation of Thermal Time}
+\item{Udev:} {Unit of Development}
+\item{Udevstress} {}
 }
 }
 \keyword{datasets}
