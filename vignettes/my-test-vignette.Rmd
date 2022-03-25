@@ -1,0 +1,55 @@
+---
+title: "my-test-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-test-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(RPackVGL)
+```
+
+# test Titre 1
+## test Titre 2
+### test Titre 3
+* test Bullet
+  * test nested bullet1
+  * test nested bullet2
+
+1. test item1
+2. test item2
+  * with bullet
+
+**Tableau (en gras)**
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|   12  |  12  |    12   |    12  |
+|  123  |  123 |   123   |   123  |
+|    1  |    1 |     1   |     1  |
+
+
+_tableau en utilisant package pander_
+
+```{r}
+library(pander)
+pander::pandoc.table(iris[1:3, 1:4])
+
+```
+
+```{r, results='asis'}
+#avec option 'asis' du chunk
+pander::pandoc.table(iris[1:3, 1:4])
+
+```
+
+
