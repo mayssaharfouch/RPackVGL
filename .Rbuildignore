@@ -1,2 +1,4 @@
 ^RPackVGL\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
+^RpackVGL$
