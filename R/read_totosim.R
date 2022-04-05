@@ -1,8 +1,8 @@
-#' This function builds dtoto
+#' This function builds dtoto: a data frame grouping all the IDusms simulated by the model
 #'
-#' @param ls_toto list of all toto files of the same experiment
+#' @param ls_toto list of all toto files of the same experiment (.csv files)
 #'
-#' @return A dataframe. Each row of this list correspond to an IDusm
+#' @return A data frame. Each row of this data frame corresponds to an IDusm
 #' @export
 #'
 build_dtoto <- function(ls_toto)

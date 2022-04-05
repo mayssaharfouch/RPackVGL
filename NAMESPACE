@@ -2,6 +2,7 @@
 
 export("%>%")
 export(build_dtoto)
+export(build_simmoy)
 export(read_ltoto)
 importFrom(magrittr,"%>%")
 importFrom(utils,read.table)
