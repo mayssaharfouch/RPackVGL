@@ -21,6 +21,3 @@ A data frame grouping all the outputs variables and their mean values for each D
 \description{
 This function groups all the mean of the output variables in one data frame
 }
-\examples{
-simmoy <- build_simmoy(ltoto, lsusm=names(ltoto))
-}

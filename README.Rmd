@@ -15,5 +15,6 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/mayssaharfouch/RPackVGL/workflows/R-CMD-check/badge.svg)](https://github.com/mayssaharfouch/RPackVGL/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/mayssaharfouch/RPackVGL/workflows/R-CMD-check/badge.svg)](https://github.com/mayssaharfouch/RPackVGL/actions)
 <!-- badges: end -->
   
