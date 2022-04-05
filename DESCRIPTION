@@ -17,6 +17,7 @@ Imports:
     ggpubr,
     hrbrthemes,
     magrittr,
+    pander,
     patchwork,
     rlang,
     usethis
