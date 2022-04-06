@@ -3,10 +3,10 @@
 on:
   push:
     branches:
-      - develop-mayssa
+      - master
   pull_request:
     branches:
-      - develop-mayssa
+      - master
 
 name: R-CMD-check
 
