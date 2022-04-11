@@ -31,3 +31,23 @@ gg_plotsim <- function(varsim, simmoy, simsd, name = " ", col="blue", colref="re
 
   plot_var
 }
+
+#' Tbis function adds the observed points to plot_var
+#'
+#' @param plot_var plot of the dynamics of the output variables of L-egume
+#' @param var_ Simulated variable
+#' @param obsOK observation values of the same DOY range of the simulation values
+#' @param obsMerge data frame containing the simulation and observation values
+#' @param corresp equivalence between the simulated variables and the observed (collected) variables
+#'
+#' @return A 2D graph
+#' @export
+#'
+gg_addplotobs <- function(plot_var, var_, obsOK,obsMerge, corresp)
+{
+  nomvarobs <- as.character(corresp[corresp$sim==var_,c("obs")])
+  if(var_ %in% corresp$sim) {plot_var2 <- plot_var + ggplot2::geom_point(aes(obsMerge$DOY, obsMerge[,nomvarobs]), fill="red",color="red" , size=2)}
+  else {plot_var2 <- plot_var}
+
+  plot_var2
+}

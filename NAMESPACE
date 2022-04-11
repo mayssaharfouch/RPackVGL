@@ -3,6 +3,7 @@
 export("%>%")
 export(build_dtoto)
 export(build_simmoy)
+export(gg_addplotobs)
 export(gg_plotsim)
 export(read_ltoto)
 importFrom(ggplot2,aes)
