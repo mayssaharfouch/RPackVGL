@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot_simtoto.R
 \name{gg_addplotobs}
 \alias{gg_addplotobs}
-\title{Tbis function adds the observed points to plot_var}
+\title{This function adds the observed points to plot_var}
 \usage{
-gg_addplotobs(plot_var, var_, obsOK, obsMerge, corresp)
+gg_addplotobs(plot_var, var_, obsOK, obsMerge)
 }
 \arguments{
 \item{plot_var}{plot of the dynamics of the output variables of L-egume}
@@ -14,12 +14,10 @@ gg_addplotobs(plot_var, var_, obsOK, obsMerge, corresp)
 \item{obsOK}{observation values of the same DOY range of the simulation values}
 
 \item{obsMerge}{data frame containing the simulation and observation values}
-
-\item{corresp}{equivalence between the simulated variables and the observed (collected) variables}
 }
 \value{
 A 2D graph
 }
 \description{
-Tbis function adds the observed points to plot_var
+This function adds the observed points to plot_var
 }
