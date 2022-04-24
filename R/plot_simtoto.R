@@ -1,6 +1,6 @@
 #' This functions plots the dynamics of the output variables of L-egume
 #'
-#' @param varsim Simulated variable
+#' @param varsim simulated variable
 #' @param simmoy output of build_simmoy function (mean values)
 #' @param simsd output of build_simmoy function (standard deviation)
 #' @param name name of the plot
@@ -49,4 +49,32 @@ gg_addplotobs <- function(plot_var, var_, obsOK, obsMerge)
   else {plot_var2 <- plot_var}
 
   plot_var2
+}
+
+
+#' This functions plots the dynamics of two output variables of L-egume
+#'
+#' @param varsim simulated variable
+#' @param simmoy output of build_simmoy function (mean values) for version 1
+#' @param simmoy_ output of build_simmoy function (mean values) for version 2
+#' @param simsd output of build_simmoy function (standard deviation) for version 1
+#' @param simsd_ output of build_simmoy function (standard deviation) for version 2
+#'
+#' @return A 2D graph
+#' @export
+#' @importFrom rlang .data
+gg_plotsimVar <- function(varsim, simmoy, simmoy_, simsd, simsd_)
+{
+  var_ <- varsim
+
+  min <- 0
+  max <- 1.5*max(simmoy[,var_])
+
+  plot_var <- ggplot2::ggplot(data = simmoy, aes(.data$x, .data$y)) +
+    ggplot2::geom_line(data = simmoy, aes(x = simmoy$STEPS, y = simmoy[,var_]), color="blue")+
+    ggplot2::geom_line(data = simmoy_, aes(x = simmoy_$STEPS, y = simmoy_[,var_]), color="#009E73")+
+    ylim(min,max)+
+    labs(x = "DOY", y = var_)
+
+  plot_var
 }

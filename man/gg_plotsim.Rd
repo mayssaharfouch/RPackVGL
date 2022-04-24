@@ -7,7 +7,7 @@
 gg_plotsim(varsim, simmoy, simsd, name = " ", col = "blue", colref = "red")
 }
 \arguments{
-\item{varsim}{Simulated variable}
+\item{varsim}{simulated variable}
 
 \item{simmoy}{output of build_simmoy function (mean values)}
 
