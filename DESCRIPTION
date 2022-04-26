@@ -13,6 +13,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     data.table,
+    devtools,
     ggplot2,
     ggpubr,
     hrbrthemes,
@@ -20,6 +21,7 @@ Imports:
     Metrics,
     pander,
     patchwork,
+    qpdf,
     rlang,
     stats,
     usethis
