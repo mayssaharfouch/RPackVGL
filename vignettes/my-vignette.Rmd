@@ -17,3 +17,15 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(RPackVGL)
 ```
+
+```{r}
+ls_toto <- data("toto")
+data("management")
+```
+
+mnow
+
+```{r}
+dtoto <- build_dtoto(ls_toto)
+```
+
