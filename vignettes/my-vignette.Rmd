@@ -14,18 +14,68 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction 
+L-egume is a population dynamic model considering growth and morphogenesis responses to multiple resources heterogeneously distributed in the environment.This is an example of the model simulation: a mono-specific population of tall-fescue (48 plants). 
+
+The objective of this document is to show how to plot the dynamics of the model's output variables.
+
+# Required libraries 
+
 ```{r setup}
 library(RPackVGL)
+library(ggplot2)
+library(dplyr)
 ```
 
+# Loading Datasets 
+
 ```{r}
-ls_toto <- data("toto")
+data("toto")
 data("management")
 ```
 
-mnow
+# Determining the average of the 48 tall-fescue plants 
 
 ```{r}
-dtoto <- build_dtoto(ls_toto)
+meanFet <- toto[, 3:66]
+meanFet <- rowMeans(meanFet)
+df <- data.frame("variable" = toto$V1, "steps" = toto$steps, "Fet" = meanFet)
+df <- df [-(1),]
+```
+
+# Plotting the dynamics of the number of tillers
+
+```{r}
+NBsh <- subset(df,variable=="NBsh")
+plot_var <- ggplot2::ggplot(NBsh, aes(x =steps, Fet))+
+  geom_line()+
+  theme(legend.text=element_text(family = "serif", size=10), 
+        axis.text.x = element_text(angle = 90, size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title.x =element_text(family = "serif", size=15),
+        axis.title.y=element_text(family = "serif", size=15))+ 
+  scale_colour_manual(values= c( "#009E73", "#D16103"))+
+  scale_x_continuous("STEPS ")+
+  scale_y_continuous("Number of tillers")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+plot_var
+```
+
+# Management 
+## Cuts 
+Adding the days of the cuts and the length of the cuts to the previous graph 
+
+```{r}
+mng.Cut <- as.data.frame(management[management$Coupe == 1, ])
+cut_DOY <- data.frame(DOY = mng.Cut$DOY, hcut = mng.Cut$Hcut)
+break_init <- sort(c(seq(0, last(NBsh$steps), by = 100), cut_DOY$DOY), decreasing = FALSE)
+bln10 <- diff(break_init) < 10
+breaks_x <- replace(break_init, (c(FALSE, bln10) | c(bln10, FALSE)) & break_init %% 100 == 0, NA)
+plot_cut <- plot_var +
+      geom_point(data = cut_DOY, aes(x = DOY, y = hcut), shape = 4, color = "black", size = 2)+
+      scale_x_continuous(breaks = breaks_x) 
+plot_cut
+  
 ```
 
